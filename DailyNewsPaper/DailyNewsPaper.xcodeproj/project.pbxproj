@@ -13,6 +13,7 @@
 		C15C9EAA1BF7027800A8966B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C15C9EA61BF7027800A8966B /* AppDelegate.m */; settings = {ASSET_TAGS = (); }; };
 		C15C9EAB1BF7027800A8966B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C15C9EA71BF7027800A8966B /* Info.plist */; settings = {ASSET_TAGS = (); }; };
 		C15C9EAC1BF7027800A8966B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C15C9EA81BF7027800A8966B /* main.m */; settings = {ASSET_TAGS = (); }; };
+		C15C9EAF1BF7068B00A8966B /* DailyNewsMainMenuViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C15C9EAE1BF7068B00A8966B /* DailyNewsMainMenuViewControl.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,8 @@
 		C15C9EA61BF7027800A8966B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C15C9EA71BF7027800A8966B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C15C9EA81BF7027800A8966B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C15C9EAD1BF7068B00A8966B /* DailyNewsMainMenuViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyNewsMainMenuViewControl.h; sourceTree = "<group>"; };
+		C15C9EAE1BF7068B00A8966B /* DailyNewsMainMenuViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DailyNewsMainMenuViewControl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -431,6 +434,8 @@
 		C15C9EA11BF7027800A8966B /* control */ = {
 			isa = PBXGroup;
 			children = (
+				C15C9EAD1BF7068B00A8966B /* DailyNewsMainMenuViewControl.h */,
+				C15C9EAE1BF7068B00A8966B /* DailyNewsMainMenuViewControl.m */,
 			);
 			path = control;
 			sourceTree = "<group>";
@@ -538,6 +543,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C15C9EAF1BF7068B00A8966B /* DailyNewsMainMenuViewControl.m in Sources */,
 				C15C9EAC1BF7027800A8966B /* main.m in Sources */,
 				C15C9EAA1BF7027800A8966B /* AppDelegate.m in Sources */,
 			);
