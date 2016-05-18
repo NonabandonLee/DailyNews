@@ -1,0 +1,180 @@
+//
+//  EmotionBar.m
+//  dating
+//
+//  Created by test on 16/5/18.
+//  Copyright © 2016? qpidnetwork. All rights reserved.
+//
+
+#import "EmotionBar.h"
+
+@interface EmotionBar()
+
+/** ???? */
+@property (weak,nonatomic) UIButton *titleBtn;
+/** ????? */
+@property (nonatomic,weak) UIView *underlineView;
+
+/** ???? */
+@property (nonatomic,weak) UIButton *selectedBtn;
+
+/** layer */
+@property (nonatomic,weak) CALayer *borderLayer;
+@end
+
+
+
+
+@implementation EmotionBar
+
+- (instancetype)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]) {
+        
+//        [self setupTitleBtn];
+//        [self setupUnderlineView];
+        [self setupBtn:@"" buttonType:EmotionBarTypeDefault];
+        [self setupBtn:@"" buttonType:EmotionBarTypeNil];
+        [self setupBtn:@"" buttonType:EmotionBarTypeNil];
+        [self setupBtn:@"" buttonType:EmotionBarTypeNil];
+        [self setupBtn:@"" buttonType:EmotionBarTypeNil];
+        [self setupBtn:@"" buttonType:EmotionBarTypeNil];
+        [self setupBtn:@"" buttonType:EmotionBarTypeNil];
+        [self setupBtn:@"Send" buttonType:EmotionBarTypeSend];
+        
+//        UIView *underlineView = [[UIView alloc] init];
+//        [self addSubview:underlineView];
+//            self.underlineView = underlineView;
+    }
+    
+    return self;
+}
+
+
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    
+    
+    [self setupTitleBtn];
+    
+ 
+//    [self setupUnderlineView];
+    self.underlineView.sizeWidth = self.sizeWidth;
+    self.underlineView.sizeHeight = 5;
+    
+}
+
+- (UIButton *)setupBtn:(NSString *)title buttonType:(EmotionBarType)buttonType{
+    
+    
+    UIButton *btn = [[UIButton alloc] init];
+    btn.adjustsImageWhenHighlighted = NO;
+    [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchDown];
+    btn.tag = buttonType;
+    [btn setTitle:title forState:UIControlStateNormal];
+    [self addSubview:btn];
+    
+
+    
+    NSString *image = @"emotionKeyboardBackground";
+    UIImage *normalImage = [UIImage imageNamed:image];
+    normalImage = [normalImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, normalImage.size.width - 1) resizingMode:UIImageResizingModeStretch];
+
+    NSString *select = @"buttonBarBackground";
+    UIImage *selectImage = [UIImage imageNamed:select];
+    selectImage = [selectImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, selectImage.size.width - 1) resizingMode:UIImageResizingModeStretch];
+    
+    [btn setBackgroundImage:normalImage forState:UIControlStateNormal];
+    [btn setBackgroundImage:selectImage forState:UIControlStateDisabled];
+    
+    
+    
+    if (btn.tag == EmotionBarTypeDefault) {
+        [btn setImage:[UIImage imageNamed:@"ChatEmotion"] forState:UIControlStateDisabled];
+        [btn setImage:[UIImage imageNamed:@"Chat-KeyboardEmotion"] forState:UIControlStateNormal];
+    }else if (btn.tag == EmotionBarTypeNil) {
+        btn.enabled = NO;
+        [btn setBackgroundImage:normalImage forState:UIControlStateDisabled];
+    }else if (btn.tag == EmotionBarTypeSend) {
+        [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+        btn.layer.cornerRadius = 5.0f;
+        [btn setBackgroundColor:[UIColor blueColor]];
+        [btn setBackgroundImage:nil forState:UIControlStateDisabled];
+        [btn setBackgroundImage:nil forState:UIControlStateNormal];
+    }
+
+    
+    return btn;
+}
+
+
+- (void)setDelegate:(id<EmotionBarDelegate>)delegate{
+    _delegate = delegate;
+    [self btnClick:(UIButton *)[self viewWithTag:EmotionBarTypeDefault]];
+}
+
+
+//- (void)setupTitleBtn{
+//    
+//    // ?????frame
+//    NSUInteger btnCount = self.subviews.count;
+//    CGFloat btnW = self.sizeWidth / btnCount;
+//    CGFloat btnH = self.sizeHeight;
+//    for (int i = 0; i<btnCount; i++) {
+//        UIButton *btn = self.subviews[i];
+//        CALayer *topBorder = [CALayer layer];
+//        topBorder.frame = CGRectMake(0, 0, btnW, 3);
+//        topBorder.backgroundColor = [UIColor whiteColor].CGColor;
+//        [btn.layer addSublayer:topBorder];
+//        btn.originY = 0;
+//        btn.sizeWidth = btnW;
+//        btn.originX = i * btnW;
+//        btn.sizeHeight = btnH;
+//    }
+//}
+
+- (void)setupTitleBtn{
+    
+    // ?????frame
+    NSUInteger btnCount = self.subviews.count;
+    CGFloat btnW = self.sizeWidth / btnCount;
+    CGFloat btnH = self.sizeHeight;
+    for (int i = 0; i<btnCount; i++) {
+        UIButton *btn = self.subviews[i];
+        btn.originY = 2;
+        btn.sizeWidth = btnW;
+        btn.originX = i * btnW;
+        btn.sizeHeight = btnH;
+    }
+    
+    
+}
+
+- (void)setupUnderlineView{
+    UIButton *firstTitleBtn = self.subviews.firstObject;
+    self.underlineView.backgroundColor = [firstTitleBtn titleColorForState:UIControlStateSelected];
+    self.underlineView.sizeHeight = 2;
+    self.underlineView.originY = 0;
+    firstTitleBtn.selected = YES;
+    self.titleBtn = firstTitleBtn;
+    [firstTitleBtn.titleLabel sizeToFit];
+    self.underlineView.sizeWidth = firstTitleBtn.titleLabel.sizeWidth;
+    self.underlineView.centerX = firstTitleBtn.centerX;
+}
+
+
+
+/**
+ *  ????
+ */
+- (void)btnClick:(UIButton *)btn{
+    self.selectedBtn.enabled = YES;
+    btn.enabled = NO;
+    self.selectedBtn = btn;
+    
+
+    // ????
+    if ([self.delegate respondsToSelector:@selector(emotionBarButtonDidSelect:selectBtnType:)]) {
+        [self.delegate emotionBarButtonDidSelect:self selectBtnType:(EmotionBarType)btn.tag];
+    }
+}
+@end
